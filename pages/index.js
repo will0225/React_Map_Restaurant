@@ -16,7 +16,16 @@ import {
   BrowserView,
   MobileView,
   isBrowser,
-  isMobile
+  isMobile,
+  browserName,
+  BrowserTypes,
+  osName,
+  isIOS,
+  isWindows,
+  isMacOs,	
+  isSafari,
+  isAndroid,
+  isChrome
 } from "react-device-detect";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
@@ -59,6 +68,8 @@ function Restaurant(props) {
   const [open, setOpen] = React.useState(false);
   const [detail, setDetail] = useState(null);
   const matches = useMediaQuery('(min-width:700px)');
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleClickOpen = (tile) => {
     setDetail(tile);
@@ -72,6 +83,32 @@ function Restaurant(props) {
   };
 
   useEffect(() => {
+    if(isWindows) {
+      if(!isFirefox) {
+        setError(true);
+        setErrorMessage('Please run in Firefox!');
+      } 
+    } else if (isMacOs) {
+      if(!isSafari) {
+        setError(true);
+        setErrorMessage('Please run in Safari!');
+      }
+    } else if(isAndroid) {
+        if(!isChrome) {
+          setError(true);
+          setErrorMessage('Please run in Chrome!');
+        }
+    } else if(isIOS) {
+      if(!isSafari) {
+        setError(true);
+        setErrorMessage('Please run in Safari!');
+      }
+    } else {
+      if(!isChrome) {
+        setError(true);
+        setErrorMessage('Please run in chrome!');
+      }
+    }
     axios.get('https://s3.amazonaws.com/br-codingexams/restaurants.json')
     .then(res => {
       console.log(res.data.restaurants)
@@ -81,9 +118,11 @@ function Restaurant(props) {
     })
   }, [])
   const classes = useStyles();
-  console.log(BrowserView, 'isMobile');
-  return (
-     
+  console.log(isIOS, 'isIOS');
+  console.log(BrowserTypes, 'browserName')
+  
+  return (<>
+      {!error?
       <div className={classes.root}>
         <div className="header" style={{ display: 'flex', height: '50px', background: '#43E895', position: "fixed", top: 0, width: '100%', zIndex: 999, padding: 6 }}>
           <p style={{ flex: 4, textAlign: "center", fontFamily: 'Avenir Next Demi Bold', fontSize: 17, color: '#FFFFFF', fontWeight: "bold"}}>Lunch Tyme</p>
@@ -149,7 +188,7 @@ function Restaurant(props) {
             <p style={{ marginTop: 26 }}>{detail && detail?.contact?.formattedPhone}</p>
             <p style={{ marginTop: 26 }}>@{detail && detail?.contact?.twitter}</p>
           </div>
-          <div className="footer" style={{ display: 'flex', height: 50, background: '#2A2A2A', width: '100%', position: "fixed", bottom: 0, padding: 10 }}> 
+          {!isIOS?<div className="footer" style={{ display: 'flex', height: 50, background: '#2A2A2A', width: '100%', position: "fixed", bottom: 0, padding: 10 }}> 
           <div className="footerLeft" style={{ flex: 1, textAlign: 'center' }}>
               <Image
                 src='/assets/tab_lunch.png'
@@ -170,9 +209,9 @@ function Restaurant(props) {
               />
               <p style={{ margin: 0, color: '#FFFFFF', fontFamily: 'Avenir Next Demi Bold', fontSize: 10 }}>Internets</p>
             </div>
-          </div>
+          </div>:null}
         </Dialog>
-        <div className="footer" style={{ display: 'flex', height: 50, background: '#2A2A2A', width: '100%', position: "fixed", bottom: 0, padding: 10 }}> 
+        {!isIOS?<div className="footer" style={{ display: 'flex', height: 50, background: '#2A2A2A', width: '100%', position: "fixed", bottom: 0, padding: 10 }}> 
             <div className="footerLeft" style={{ flex: 1, textAlign: 'center' }}>
               <Image
                 src='/assets/tab_lunch.png'
@@ -194,8 +233,12 @@ function Restaurant(props) {
               <p style={{ margin: 0, color: '#FFFFFF', fontFamily: 'Avenir Next Demi Bold', fontSize: 10 }}>Internets</p>
             </div>
         </div>
+        :null}
       </div>
-  )
+      :<div>
+        {errorMessage}
+      </div>}
+      </>)
 }
 
 export default GoogleApiWrapper({

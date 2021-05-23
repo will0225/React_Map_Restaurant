@@ -84,17 +84,7 @@ function Restaurant(props) {
   };
 
   useEffect(() => {
-    if(isWindows) {
-      if(!isFirefox) {
-        setError(true);
-        setErrorMessage('Please run in Firefox!');
-      } 
-    } else if (isMacOs) {
-      if(!isSafari) {
-        setError(true);
-        setErrorMessage('Please run in Safari!');
-      }
-    } else if(isAndroid) {
+    if(isAndroid) {
         if(!isChrome) {
           setError(true);
           setErrorMessage('Please run in Chrome!');
@@ -105,7 +95,9 @@ function Restaurant(props) {
         setErrorMessage('Please run in Safari!');
       }
     } else {
-      if(!isChrome) {
+      if(isChrome || isFirefox) {
+        
+      } else {
         setError(true);
         setErrorMessage('Please run in chrome!');
       }

@@ -25,7 +25,8 @@ import {
   isMacOs,	
   isSafari,
   isAndroid,
-  isChrome
+  isChrome,
+  isFirefox
 } from "react-device-detect";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 

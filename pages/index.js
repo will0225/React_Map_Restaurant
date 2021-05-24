@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
+    paddingBottom: 50
   },
   gridList: {
     width: 500,
@@ -201,7 +202,7 @@ function Restaurant(props) {
             </div>
           </div>:null}
         </Dialog>
-        {!isIOS?<div className="footer" style={{ display: 'flex', height: 50, background: '#2A2A2A', width: '100%', padding: 10 }}> 
+        {!isIOS?<div className="footer" style={{ display: 'flex', height: 50, background: '#2A2A2A', width: '100%', padding: 10, position: 'fixed', bottom: 0 }}> 
             <div className="footerLeft" style={{ flex: 1, textAlign: 'center' }}>
               <Image
                 src='/assets/tab_lunch.png'

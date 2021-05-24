@@ -128,7 +128,7 @@ function Restaurant(props) {
         </div>
         <GridList cellHeight={176} className={classes.gridList} style={{ marginTop: 50 }}>
           {data && data.map((tile, index) => (
-              <GridListTile key={tile.backgroundImageURL} cols={(isMobile || matches)?2:1} rows={1} onClick={() => handleClickOpen(tile)}>
+              <GridListTile key={tile.backgroundImageURL} cols={(isMobile || matches)?1:2} rows={1} onClick={() => handleClickOpen(tile)}>
                 <img src={tile.backgroundImageURL} alt={tile.category} />
                 <GridListTileBar
                   title={tile.name}

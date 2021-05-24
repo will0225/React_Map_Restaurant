@@ -177,7 +177,7 @@ function Restaurant(props) {
             <p style={{ marginTop: 16 }}>{detail && detail?.location.formattedAddress[0]}</p>
             <p>{detail && detail?.location?.formattedAddress[1]}</p>
             <p style={{ marginTop: 26 }}>{detail && detail?.contact?.formattedPhone}</p>
-            <p style={{ marginTop: 26 }}>@{detail && detail?.contact?.twitter}</p>
+            <p style={{ marginTop: 26 }}>{detail?.contact?.twitter?'@'+detail?.contact?.twitter:''}</p>
           </div>
           {!isIOS?<div className="footer" style={{ display: 'flex', height: 50, background: '#2A2A2A', width: '100%', position: "fixed", bottom: 0, padding: 10 }}> 
           <div className="footerLeft" style={{ flex: 1, textAlign: 'center' }}>

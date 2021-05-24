@@ -111,9 +111,7 @@ function Restaurant(props) {
     })
   }, [])
   const classes = useStyles();
-  console.log(isIOS, 'isIOS');
-  console.log(BrowserTypes, 'browserName')
-  
+  console.log(detail?.location?.lat)
   return (<>
       {!error?
       <div className={classes.root}>
@@ -165,19 +163,18 @@ function Restaurant(props) {
               google={props.google}
               zoom={8}
               style={{ width: '100%', height: 300 }}
-              initialCenter={{ lat: detail?detail.location.lat:47.444, lng: detail?detail.location.lat:-122.176 }}
+              initialCenter={{ lat: detail?.location?.lat, lng: detail?.location?.lng }}
             >
-              <Marker position={{ lat: detail?detail.location.lat:47.444, lng: detail?detail.location.lat:-122.176 }} />
+              <Marker position={{ lat: detail?.location?.lat, lng: detail?.location?.lng }} />
             </Map>
           </div>
           <div className="resDetail" style={{ height: 60, width: '100%', background: 'green', padding: 13 }}>
-            <p style={{ fontSize: 16, fontFamily: 'Avenir Next Demi Bold', fontWeight: "bold", color: '#FFFFFF', margin: 0}}>Name</p>
-            <p style={{ fontSize: 12, color: '#FFFFFF', margin: 0 }}>category name</p>
+            <p style={{ fontSize: 16, fontFamily: 'Avenir Next Demi Bold', fontWeight: "bold", color: '#FFFFFF', margin: 0}}>{detail?.name}</p>
+            <p style={{ fontSize: 12, color: '#FFFFFF', margin: 0 }}>{detail?.category}</p>
           </div>
           <div style={{ paddingLeft: 13 }}>
             <p style={{ marginTop: 16 }}>{detail && detail?.location.formattedAddress[0]}</p>
             <p>{detail && detail?.location?.formattedAddress[1]}</p>
-            <p>{detail && detail?.location?.formattedAddress[0]}</p>
             <p style={{ marginTop: 26 }}>{detail && detail?.contact?.formattedPhone}</p>
             <p style={{ marginTop: 26 }}>@{detail && detail?.contact?.twitter}</p>
           </div>
@@ -186,8 +183,8 @@ function Restaurant(props) {
               <Image
                 src='/assets/tab_lunch.png'
                 alt='Map'
-                width={30}
-                height={20}
+                width={23}
+                height={25}
                 style={{flex: 1}}
             />
             <p style={{ margin: 0,  color: '#FFFFFF', fontFamily: 'Avenir Next Demi Bold', fontSize: 10 }}>lunch</p>
@@ -196,21 +193,21 @@ function Restaurant(props) {
               <Image
                   src='/assets/tab_internets.png'
                   alt='Map'
-                  width={30}
-                  height={20}
+                  width={20}
+                  height={25}
                   style={{flex: 1}}
               />
               <p style={{ margin: 0, color: '#FFFFFF', fontFamily: 'Avenir Next Demi Bold', fontSize: 10 }}>Internets</p>
             </div>
           </div>:null}
         </Dialog>
-        {!isIOS?<div className="footer" style={{ display: 'flex', height: 50, background: '#2A2A2A', width: '100%', position: "fixed", bottom: 0, padding: 10 }}> 
+        {!isIOS?<div className="footer" style={{ display: 'flex', height: 50, background: '#2A2A2A', width: '100%', padding: 10 }}> 
             <div className="footerLeft" style={{ flex: 1, textAlign: 'center' }}>
               <Image
                 src='/assets/tab_lunch.png'
                 alt='Map'
-                width={30}
-                height={20}
+                width={23}
+                height={25}
                 style={{flex: 1}}
             />
             <p style={{ margin: 0,  color: '#FFFFFF', fontFamily: 'Avenir Next Demi Bold', fontSize: 10 }}>lunch</p>
@@ -219,8 +216,8 @@ function Restaurant(props) {
               <Image
                   src='/assets/tab_internets.png'
                   alt='Map'
-                  width={30}
-                  height={20}
+                  width={20}
+                  height={25}
                   style={{flex: 1}}
               />
               <p style={{ margin: 0, color: '#FFFFFF', fontFamily: 'Avenir Next Demi Bold', fontSize: 10 }}>Internets</p>

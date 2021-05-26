@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     // height: 450,
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
-    marginTop: 50
+    marginTop: '50px !important;',
   },
   titleBar: {
     background:
@@ -56,6 +56,11 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Avenir Next Demi Bold",
     fontWeight: "bold"
   },
+
+  subtitle: {
+    fontSize: 12
+  },
+
   icon: {
     color: 'white',
   },
@@ -112,12 +117,11 @@ function Restaurant(props) {
     })
   }, [])
   const classes = useStyles();
-  console.log(detail?.location?.lat)
   return (<>
       {!error?
       <div className={classes.root}>
-        <div className="header" style={{ display: 'flex', height: '50px', background: '#43E895', position: "fixed", top: 0, width: '100%', zIndex: 999, padding: 6 }}>
-          <p style={{ flex: 4, textAlign: "center", fontFamily: 'Avenir Next Demi Bold', fontSize: 17, color: '#FFFFFF', fontWeight: "bold"}}>Lunch Tyme</p>
+        <div className="header" >
+          <p>Lunch Tyme</p>
           <Image
                src='/assets/icon_map.png'
                alt='Map'
@@ -126,13 +130,13 @@ function Restaurant(props) {
                style={{flex: 1}}
            />
         </div>
-        <GridList cellHeight={176} className={classes.gridList} style={{ marginTop: 50 }}>
+        <GridList cellHeight={176} className={classes.gridList}>
           {data && data.map((tile, index) => (
-              <GridListTile key={tile.backgroundImageURL} cols={(isMobile || matches)?2:1} rows={1} onClick={() => handleClickOpen(tile)}>
+              <GridListTile key={tile.backgroundImageURL} cols={(isMobile || matches)?1:2} rows={1} onClick={() => handleClickOpen(tile)}>
                 <img src={tile.backgroundImageURL} alt={tile.category} />
                 <GridListTileBar
                   title={tile.name}
-                  subtitle={<span style={{ fontSize: 12, }}>{tile.category}</span>}
+                  subtitle={<span className={classes.subtitle}>{tile.category}</span>}
                   titlePosition="bottom"
                   actionPosition="left"
                   className={classes.titleBar}
@@ -141,7 +145,7 @@ function Restaurant(props) {
           ))}
         </GridList>
         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-          <div className="header" style={{ display: 'flex', height: '50px', background: '#43E895',  width: '100%', zIndex: 999, padding: 6 }}>
+          <div className="modalHeader">
             <Image
                src='/assets/ic_webBack.png'
                alt='Map'
@@ -150,7 +154,7 @@ function Restaurant(props) {
                style={{flex: 1}}
                onClick={handleClose}
             />
-            <p  style={{ flex: 4, textAlign: "center", fontFamily: 'Avenir Next Demi Bold', fontSize: 17, color: '#FFFFFF', fontWeight: "bold"}}>Lunch Tyme</p>
+            <p>Lunch Tyme</p>
             <Image
                src='/assets/icon_map.png'
                alt='Map'
@@ -159,7 +163,7 @@ function Restaurant(props) {
                style={{flex: 1}}
            />
           </div>
-          <div className="map" style={{ height: 300 }}>
+          <div className="map">
             <Map
               google={props.google}
               zoom={8}
@@ -169,18 +173,18 @@ function Restaurant(props) {
               <Marker position={{ lat: detail?.location?.lat, lng: detail?.location?.lng }} />
             </Map>
           </div>
-          <div className="resDetail" style={{ height: 60, width: '100%', background: 'green', padding: 13 }}>
-            <p style={{ fontSize: 16, fontFamily: 'Avenir Next Demi Bold', fontWeight: "bold", color: '#FFFFFF', margin: 0}}>{detail?.name}</p>
-            <p style={{ fontSize: 12, color: '#FFFFFF', margin: 0 }}>{detail?.category}</p>
+          <div className="resDetail">
+            <p className="resDetailName" >{detail?.name}</p>
+            <p className="resDetailCategory">{detail?.category}</p>
           </div>
-          <div style={{ paddingLeft: 13 }}>
-            <p style={{ marginTop: 16 }}>{detail && detail?.location.formattedAddress[0]}</p>
+          <div className="resContact">
+            <p className="resContactAddress" >{detail && detail?.location.formattedAddress[0]}</p>
             <p>{detail && detail?.location?.formattedAddress[1]}</p>
-            <p style={{ marginTop: 26 }}>{detail && detail?.contact?.formattedPhone}</p>
-            <p style={{ marginTop: 26 }}>{detail?.contact?.twitter?'@'+detail?.contact?.twitter:''}</p>
+            <p className="resContactPhone">{detail && detail?.contact?.formattedPhone}</p>
+            <p className="resContactPhone">{detail?.contact?.twitter?'@'+detail?.contact?.twitter:''}</p>
           </div>
-          {!isIOS?<div className="footer" style={{ display: 'flex', height: 50, background: '#2A2A2A', width: '100%', position: "fixed", bottom: 0, padding: 10 }}> 
-          <div className="footerLeft" style={{ flex: 1, textAlign: 'center' }}>
+          {!isIOS?<div className="footer"> 
+          <div className="footerLeft">
               <Image
                 src='/assets/tab_lunch.png'
                 alt='Map'
@@ -188,9 +192,9 @@ function Restaurant(props) {
                 height={25}
                 style={{flex: 1}}
             />
-            <p style={{ margin: 0,  color: '#FFFFFF', fontFamily: 'Avenir Next Demi Bold', fontSize: 10 }}>lunch</p>
+            <p>lunch</p>
             </div>
-            <div className="footerRight" style={{ flex: 1, textAlign: 'center' }}>
+            <div className="footerRight">
               <Image
                   src='/assets/tab_internets.png'
                   alt='Map'
@@ -198,12 +202,12 @@ function Restaurant(props) {
                   height={25}
                   style={{flex: 1}}
               />
-              <p style={{ margin: 0, color: '#FFFFFF', fontFamily: 'Avenir Next Demi Bold', fontSize: 10 }}>Internets</p>
+              <p>Internets</p>
             </div>
           </div>:null}
         </Dialog>
-        {!isIOS?<div className="footer" style={{ display: 'flex', height: 50, background: '#2A2A2A', width: '100%', padding: 10, position: 'fixed', bottom: 0 }}> 
-            <div className="footerLeft" style={{ flex: 1, textAlign: 'center' }}>
+        {!isIOS?<div className="footer"> 
+            <div className="footerLeft">
               <Image
                 src='/assets/tab_lunch.png'
                 alt='Map'
@@ -211,9 +215,9 @@ function Restaurant(props) {
                 height={25}
                 style={{flex: 1}}
             />
-            <p style={{ margin: 0,  color: '#FFFFFF', fontFamily: 'Avenir Next Demi Bold', fontSize: 10 }}>lunch</p>
+            <p>lunch</p>
             </div>
-            <div className="footerRight" style={{ flex: 1, textAlign: 'center' }}>
+            <div className="footerRight">
               <Image
                   src='/assets/tab_internets.png'
                   alt='Map'
@@ -221,7 +225,7 @@ function Restaurant(props) {
                   height={25}
                   style={{flex: 1}}
               />
-              <p style={{ margin: 0, color: '#FFFFFF', fontFamily: 'Avenir Next Demi Bold', fontSize: 10 }}>Internets</p>
+              <p>Internets</p>
             </div>
         </div>
         :null}

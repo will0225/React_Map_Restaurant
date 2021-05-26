@@ -237,5 +237,5 @@ function Restaurant(props) {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyCJgcL_4zdeEI7q4E-crcMP19Jx8YCbWR8'
+  apiKey: 'apiKey yours'
 })(Restaurant);
